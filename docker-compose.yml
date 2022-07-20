@@ -1,0 +1,21 @@
+version: '3'
+services:
+  db:
+    image: strapi/hiring-test-db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: test
+      POSTGRES_USER: test
+      POSTGRES_DB: test
+  api:
+    image: strapi/hiring-test-api
+    environment:
+      DATABASE_PASSWORD: test
+      DATABASE_USER: test
+      DATABASE_DB: test
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+    ports:
+      - 3000:3000
+    depends_on:
+      - db

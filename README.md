@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+# Frontend assessment
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![./images/app-image.png](./images/app-image.png)
 
-## Available Scripts
+Welcome to the Strapi frontend assessment 🙂
 
-In the project directory, you can run:
+This assessment is about checking whether you and Strapi are a good fit, technically. We expect you to show what you know and what you like to do (and it's okay not knowing everything).
 
-### `npm start`
+The goal of the assessment is to create an app (front-end) that manages space trip entities by following the requirements specified below.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+You have 7 days to do the assessment and send it back to us.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Please, **do not** put your code on a public repository on GitHub.
 
-### `npm test`
+Feel free to ask questions. Don't stay stuck for too long if you have difficulties or miss information.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+You may want to keep track of specific choices you make so you can explain them to us later.
 
-### `npm run build`
+We hope you'll have fun doing it 🙂 good luck!
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Context
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+You just saw the Star Wars movies and you really liked them (even though there are some scenario choices you're not sure you approve). You've decided to join a Star Wars fan group to talk about your new interest and you've met them for the first time yesterday evening, it went really well. They are interested (that) you are a developer and would like you to develop something for the group.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Here is what they tell you:
 
-### `npm run eject`
+"We currently have the project of creating a new world where adventures can happen. We imagine the planets of this world but it's difficult to keep track of what we have already done on paper (in order) to travel between planets. It would be nice to have an app to easily see how to go from (planet) Earth to another planet. The idea is to be able to create and view the space centers of the Earth planet and their available flights. What do you think? We all are developers too but we don't currently have the time to develop it. Would you be interested in developing it?"
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Enthusiastic to help your new group of friends, you accept.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+One week later, you send them the app you wrote so they can run it locally and give you feedback on app functionalities and the code quality.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Requirements
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### General
 
-## Learn More
+- Use `git` to version your code
+- Make sure to include all instructions for reviewers to install, run the tests and start the front-end and the back-end.
+- Use the required libraries specified below, you can use more if needed
+- Follow the provided [Functional specifications](#functional-specifications)
+- Feel free to use the [./resources/additional-assets](./resources/additional-assets) or not ; there are here only to help you
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+You'll develop an app that consumes the GraphQL service you are provided with a space centers list and their flights.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Use `React` and `create-react-app`
+- Use `apollo-graphql` for querying the GraphQL service
+- Use `styled-components`
+- If you're not comfortable with a certain part of the exercise, feel free to choose alternatives and to mention them.
+- A README.md file describing project setup (commands to run, environment variables, etc.) and tradeoffs you have made
+- The designs to follow are available on [Figma](https://www.figma.com/file/mlczslBrFwNXcZ6jY1G15R/Strapi---Front-end-test?node-id=0%3A1)
+- Use the provided assets at: [./resources/assets](./resources/assets)
 
-### Code Splitting
+**Bonus**: if you have extra time and want to have fun you can do the following:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Write some relevant tests
+- Add pagination to the flights list of a space center
 
-### Analyzing the Bundle Size
+## Functional specifications
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+With this application, the user should be able to list **the space centers and their departures flights**.
 
-### Making a Progressive Web App
+In the following specifications, there are many things to implement. However, everything related to "friendships" is optional and will be considered a "bonus". It's not the part we hope you'll invest too much effort and time in.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Acceptance tests
 
-### Advanced Configuration
+#### As a regular user,
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Given that **I am on the `space centers`page and being on the `/` URL**
 
-### Deployment
+- I'm provided with a **list of all the space centers**.
+- When **I select a specific space center** on the space centers grid, I'm provided with **a sidebar showing all the flights leaving from this space center**.
+  - I am provided with **the space center's description**
+  - I am provided with the **number of flights leaving the space center**
+  - I can see a list of the **departures of the space center** displaying both the **departureAt** information and the name of the **landing site**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Environment
 
-### `npm run build` fails to minify
+### Back-end
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+You're provided with a [`docker-compose.yml`](./docker-compose.yml) file that spawns a backend for you: **you don't have to create one**.
+
+In order to start the containers, run the following in a terminal:
+
+```sh
+$ docker-compose up -d
+```
+
+After spawning them up, you will be available to access a Graphql API (+ playground) on `http://localhost:3000/graphql`.
+
+We strongly advice to play with the different queries available on the Graphql Playground in order to use the good ones.
+
+**Note:**
+
+When setting up your Graphql configuration (on the frontend), make sure to pass the following header in order to be able to have access to the queries:
+
+```json
+{
+  "Authorization": "Bearer API_KEY"
+}
+```
