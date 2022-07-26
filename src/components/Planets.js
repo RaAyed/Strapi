@@ -24,7 +24,8 @@ const Content = styled.div`
     flex-grow: 1;
 `;
 const Title = styled.h1`
-    font-size: 1.5em;
+    font-size: 2.5em;
+    font-weight: 900;
 `;
 const List = styled.div`
     display: flex;
@@ -69,21 +70,27 @@ function Planets() {
         }
     `;
 
-    const [page, setPage] = useState(0);
-    const [pageSize] = useState(15);
+    const [page, setPage] = useState(1);
     const [selectedSpaceCenter, setSelectedSpaceCenter] = useState(null);
-    const [flightsNum] = useState(1538);
+    const [planetDetailsOpen, setPlanetDetailsOpen] = useState(false);
+    const flightsNum = 1596;
+    const pageSize = 12;
     let maxPage = 0;
+
+    const onSelectPlanet = (planet) => {
+        setSelectedSpaceCenter(planet);
+        setPlanetDetailsOpen(true);
+    };
 
     function _renderPlanetCards() {
         const { loading, error, data } = useQuery(GET_SPACE_CENTERS, { variables: { page, pageSize } });
 
         if (loading) return <img src={loader} alt="loader" />;
-        if (error) return;
+        if (error) return `Error! ${error.message}`;
         maxPage = Math.floor(data.spaceCenters.pagination.total / data.spaceCenters.pagination.pageSize);
         return data.spaceCenters.nodes.map((node) => (
             <PlanetCard key={node.id} name={node.name} image={images[node.id % 9]} selected={selectedSpaceCenter?.id === node.id} flightsNum={flightsNum}
-                        onSelect={() => setSelectedSpaceCenter(node)} />
+                        onSelect={() => onSelectPlanet(node)} />
         ));
     }
 
@@ -93,11 +100,14 @@ function Planets() {
                 <Title>Spacious</Title>
                 <List>{_renderPlanetCards()}</List>
                 <Pagination>
-                    <PaginationButton onClick={() => setPage(page - 1)} disabled={page === 0}>&lt; Previous</PaginationButton>
+                    <PaginationButton onClick={() => setPage(page - 1)} disabled={page === 1}>&lt; Previous</PaginationButton>
                     <PaginationButton onClick={() => setPage(page + 1)} disabled={page === maxPage}>Next &gt;</PaginationButton>
                 </Pagination>
             </Content>
-            { selectedSpaceCenter && <PlanetDetails selectedSpaceCenter={selectedSpaceCenter} flightsNum={flightsNum} /> }
+            { planetDetailsOpen &&
+                <PlanetDetails selectedSpaceCenter={selectedSpaceCenter} flightsNum={flightsNum}
+                               onClose={() => setPlanetDetailsOpen(false)} />
+            }
         </Container>
     );
 }
