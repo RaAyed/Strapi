@@ -24,6 +24,7 @@ const List = styled.ul`
     list-style: none;
     padding: 0;
     flex-grow: 1;
+    overflow: auto;
 `;
 const ListItem = styled.li`
     display: flex;
