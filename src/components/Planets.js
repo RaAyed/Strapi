@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PlanetCard from './commun/PlanetCard';
 import PlanetDetails from './commun/PlanetDetails';
@@ -73,21 +73,26 @@ function Planets() {
     const [page, setPage] = useState(1);
     const [selectedSpaceCenter, setSelectedSpaceCenter] = useState(null);
     const [planetDetailsOpen, setPlanetDetailsOpen] = useState(false);
+    const [maxPage, setMaxPage] = useState(1);
     const flightsNum = 1596;
     const pageSize = 12;
-    let maxPage = 0;
 
     const onSelectPlanet = (planet) => {
         setSelectedSpaceCenter(planet);
         setPlanetDetailsOpen(true);
     };
 
-    function _renderPlanetCards() {
-        const { loading, error, data } = useQuery(GET_SPACE_CENTERS, { variables: { page, pageSize } });
+    const { loading, error, data } = useQuery(GET_SPACE_CENTERS, { variables: { page, pageSize } });
 
+    useEffect(() => {
+        if (!!data) {
+            setMaxPage(Math.floor(data.spaceCenters.pagination.total / data.spaceCenters.pagination.pageSize));
+        }
+    }, [data]);
+
+    function _renderPlanetCards() {
         if (loading) return <img src={loader} alt="loader" />;
         if (error) return `Error! ${error.message}`;
-        maxPage = Math.floor(data.spaceCenters.pagination.total / data.spaceCenters.pagination.pageSize);
         return data.spaceCenters.nodes.map((node) => (
             <PlanetCard key={node.id} name={node.name} image={images[node.id % 9]} selected={selectedSpaceCenter?.id === node.id} flightsNum={flightsNum}
                         onSelect={() => onSelectPlanet(node)} />

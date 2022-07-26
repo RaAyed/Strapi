@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useQuery, gql } from "@apollo/client";
 import loader from '../../resources/assets/planet-loader.svg';
@@ -43,14 +43,20 @@ const Pagination = styled.div`
 const PaginationButton = styled.button`
     border: unset;
 `;
+const Header = styled.div`
+    display: flex;
+    justify-content: flex-end;
+`;
 const CloseButton = styled.button`
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
 `;
 
 function PlanetDetails(props) {
     const [page, setPage] = useState(1);
-    let flightsNum = 1596;
+    const [flightsNum, setFlightsNum] = useState();
+    const [maxPage, setMaxPage] = useState(1);
     const pageSize = 12;
-    let maxPage = 0;
 
     const GET_FLIGHTS = gql`
         query getFlight($from: ID, $page: Int, $pageSize: Int) {
@@ -97,13 +103,18 @@ function PlanetDetails(props) {
         }
     `;
 
-    function _renderFlights() {
-        const { loading, error, data } = useQuery(GET_FLIGHTS, { variables: { from: props.selectedSpaceCenter.id, page, pageSize } });
+    const { loading, error, data } = useQuery(GET_FLIGHTS, { variables: { from: props.selectedSpaceCenter.id, page, pageSize } });
 
+    useEffect(() => {
+        if (!!data) {
+            setFlightsNum(data.flights.pagination.total);
+            setMaxPage(Math.floor(data.flights.pagination.total / data.flights.pagination.pageSize));
+        }
+    }, [data]);
+
+    function _renderFlights() {
         if (loading) return 'Loading...';
         if (error) return `Error! ${error.message}`;
-        flightsNum = data.flights.pagination.total;
-        maxPage = Math.floor(data.flights.pagination.total / data.flights.pagination.pageSize);
         return data.flights.nodes.map((node) => (
             <ListItem key={node.id}>
                 <Image src={loader} alt="loader" />
@@ -117,7 +128,9 @@ function PlanetDetails(props) {
 
     return (
         <Container>
-            <CloseButton onClick={props.onClose}>X</CloseButton>
+            <Header>
+                <CloseButton onClick={props.onClose}>X</CloseButton>
+            </Header>
             <Title>{props.selectedSpaceCenter.name}</Title>
             <Description>{props.selectedSpaceCenter.description}</Description>
             <Description><b>Number of flights: {flightsNum}</b></Description>
