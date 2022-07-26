@@ -48,7 +48,7 @@ const CloseButton = styled.button`
 
 function PlanetDetails(props) {
     const [page, setPage] = useState(1);
-    const flightsNum = 1596;
+    let flightsNum = 1596;
     const pageSize = 12;
     let maxPage = 0;
 

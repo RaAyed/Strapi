@@ -105,8 +105,7 @@ function Planets() {
                 </Pagination>
             </Content>
             { planetDetailsOpen &&
-                <PlanetDetails selectedSpaceCenter={selectedSpaceCenter} flightsNum={flightsNum}
-                               onClose={() => setPlanetDetailsOpen(false)} />
+                <PlanetDetails selectedSpaceCenter={selectedSpaceCenter} onClose={() => setPlanetDetailsOpen(false)} />
             }
         </Container>
     );
